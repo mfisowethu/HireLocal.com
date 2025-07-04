@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs | HireLocal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* === BLUE-GRAY THEME === */
+        :root {
+            --primary: #2ECC71;       /* Green accent */
+            --primary-dark: #27AE60;
+            --secondary: #F1C40F;     /* Gold accent */
+            --accent: #3498DB;        /* Blue accent */
+            --dark: #2C3E50;          /* Dark blue-gray */
+            --light: #ECF0F1;         /* Light blue-gray */
+            --bg-color: #F8FAFC;      /* Page background */
+            --card-bg: #FFFFFF;       /* Card background */
+            --text: #34495E;          /* Main text */
+            --text-light: #7F8C8D;    /* Secondary text */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* === HEADER === */
+        header {
+            background: var(--dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* === PAGE HERO === */
+        .page-hero {
+            background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)), 
+                        url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .page-hero p {
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+        
+        /* === JOB SEARCH === */
+        .job-search {
+            padding: 40px 0;
+            background: var(--bg-color);
+        }
+        
+        .search-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: -40px;
+        }
+        
+        .search-title {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            background: var(--card-bg);
+        }
+        
+        .search-btn {
+            align-self: flex-end;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        /* === JOB LISTINGS === */
+        .job-listings {
+            padding: 40px 0 80px;
+            background: var(--bg-color);
+        }
+        
+        .jobs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .jobs-header h2 {
+            color: var(--dark);
+        }
+        
+        .jobs-header p {
+            color: var(--text-light);
+        }
+        
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .job-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: var(--light);
+        }
+        
+        .job-type {
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .job-type.cleaning {
+            background: var(--primary);
+        }
+        
+        .job-type.delivery {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .job-type.events {
+            background: var(--accent);
+        }
+        
+        .job-urgent {
+            background: #E74C3C;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .job-content {
+            padding: 20px;
+        }
+        
+        .job-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .job-content p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .job-content i {
+            color: var(--primary);
+            width: 16px;
+            text-align: center;
+        }
+        
+        .job-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+        
+        /* === PAGINATION === */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+        
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            background: var(--card-bg);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .page-link:hover,
+        .page-link.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* === FOOTER === */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-btn {
+                width: 100%;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">Hire<span>Local</span></a>
+                <nav class="nav-links">
+                    <a href="jobs.html">Find Jobs</a>
+                    <a href="worker-signup.html">For Workers</a>
+                    <a href="business-signup.html">For Businesses</a>
+                    <a href="about.html">About Us</a>
+                    <a href="#" class="btn btn-primary">Sign In</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Find Your Next Opportunity</h1>
+            <p>Browse hundreds of gigs available in your area</p>
+        </div>
+    </section>
+
+    <!-- Job Search -->
+    <section class="job-search">
+        <div class="container">
+            <div class="search-card">
+                <h3 class="search-title">Filter Jobs</h3>
+                <div class="filter-options">
+                    <div class="filter-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="">All Locations</option>
+                            <option value="jhb">Johannesburg</option>
+                            <option value="cpt">Cape Town</option>
+                            <option value="dbn">Durban</option>
+                            <option value="pta">Pretoria</option>
+                            <option value="pe">Port Elizabeth</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="">All Categories</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="events">Events</option>
+                            <option value="retail">Retail</option>
+                            <option value="construction">Construction</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="pay-rate">Pay Rate (ZAR)</label>
+                        <select id="pay-rate">
+                            <option value="">Any</option>
+                            <option value="50-100">R50 - R100/hr</option>
+                            <option value="100-150">R100 - R150/hr</option>
+                            <option value="150+">R150+/hr</option>
+                        </select>
+                    </div>
+                    <div class="filter-group search-btn">
+                        <button class="btn btn-primary">Search Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="job-listings">
+        <div class="container">
+            <div class="jobs-header">
+                <h2>Available Gigs</h2>
+                <p>Showing 24 jobs in Johannesburg</p>
+            </div>
+            
+            <div class="jobs-grid">
+                <!-- Job Card 1 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-type cleaning">Cleaning</div>
+                        <div class="job-urgent">Urgent</div>
+                    </div>
+                    <div class="job-content">
+                        <h3>Office Cleaner Needed</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Sandton, Johannesburg</p>
+                        <p><i class="fas fa-calendar-alt"></i> Starts: Tomorrow</p>
+                        <p><i class="fas fa-wallet"></i> R150 per shift</p>
+                        <p><i class="fas fa-clock"></i> 4 hours/day</p>
+                    </div>
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Job Card 2 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-type delivery">Delivery</div>
+                    </div>
+                    <div class="job-content">
+                        <h3>Food Delivery Driver</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Cape Town CBD</p>
+                        <p><i class="fas fa-calendar-alt"></i> Starts: ASAP</p>
+                        <p><i class="fas fa-wallet"></i> R120 per hour</p>
+                        <p><i class="fas fa-clock"></i> Flexible hours</p>
+                    </div>
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Job Card 3 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-type events">Events</div>
+                        <div class="job-urgent">Urgent</div>
+                    </div>
+                    <div class="job-content">
+                        <h3>Event Staff for Wedding</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Durban North</p>
+                        <p><i class="fas fa-calendar-alt"></i> Saturday, 15 July</p>
+                        <p><i class="fas fa-wallet"></i> R200 for 6 hours</p>
+                        <p><i class="fas fa-clock"></i> 2pm - 8pm</p>
+                    </div>
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- More job cards would go here -->
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">4</a>
+                <a href="#" class="page-link">></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>HireLocal</h3>
+                    <p>Empowering South Africa's youth through accessible employment opportunities.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>For Workers</h3>
+                    <ul>
+                        <li><a href="worker-signup.html">Find Work</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>For Businesses</h3>
+                    <ul>
+                        <li><a href="business-signup.html">Post a Job</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Safety Standards</a></li>
+                        <li><a href="#">Business Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HireLocal. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
